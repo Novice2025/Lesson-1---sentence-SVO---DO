@@ -177,6 +177,7 @@
 
     <script type="text/babel">
         // CORREÇÃO APLICADA AQUI: Acessar os ícones Lucide React diretamente do objeto global
+        // Isso é mais robusto para CDNs em ambientes de navegador com Babel.
         const RefreshCw = LucideReact.RefreshCw;
         const CheckCircle = LucideReact.CheckCircle;
         const XCircle = LucideReact.XCircle;
@@ -293,6 +294,7 @@
                         ${isDragging ? 'opacity-50 border-4 border-dashed border-gray-600' : 'opacity-100'}
                         text-2xl sm:text-3xl tracking-wider min-w-[120px] text-center
                     `}
+                    // Removido style={{ fontFamily: "'Inter', sans-serif" }} pois já está no body
                 >
                     {content}
                 </div>
@@ -300,22 +302,33 @@
         };
 
         const DropZone = ({ index, onDropBlock, block, isCorrect, placeholder }) => {
-            const [{ isOver }, drop] = ReactDnD.useDrop(() => ({
+            const [{ isOver, canDrop }, drop] = ReactDnD.useDrop(() => ({
                 accept: ITEM_TYPE,
                 drop: (item) => onDropBlock(item, index),
                 collect: (monitor) => ({
                     isOver: monitor.isOver(),
+                    canDrop: monitor.canDrop(),
                 }),
             }), [index, onDropBlock]);
+
+            const isActive = isOver && canDrop;
+            let borderColor = 'border-gray-700';
+            let background = 'bg-gray-800/50 border-dashed';
+
+            if (block) {
+                borderColor = isCorrect ? 'border-lime-400 shadow-lg shadow-lime-900' : 'border-red-500 shadow-lg shadow-red-900';
+                background = 'bg-gray-900/50';
+            } else if (isActive) {
+                borderColor = 'border-cyan-500 bg-gray-700 transition duration-150';
+            }
 
             return (
                 <div
                     ref={drop}
                     className={`
-                        relative flex items-center justify-center p-4 rounded-xl border-2 border-dashed
-                        ${isOver ? 'border-cyan-400 bg-cyan-900/20' : 'border-gray-600'}
-                        ${block ? (isCorrect ? 'bg-lime-900/30 border-lime-500' : 'bg-red-900/30 border-red-500') : ''}
-                        min-w-[120px] min-h-[70px] text-center
+                        min-h-[6rem] w-full sm:w-1/4 flex items-center justify-center p-2 rounded-xl border-4 transition-all duration-300
+                        ${borderColor} ${background}
+                        ${isCorrect ? 'animate-pulse-once' : ''}
                     `}
                 >
                     {block ? (
@@ -323,16 +336,17 @@
                             id={block.id}
                             content={block.content}
                             color={block.color}
-                            currentOrder={[]} // Não é arrastável da zona de drop
+                            currentOrder={[]} // Passar vazio pois o bloco já está na dropzone
                         />
                     ) : (
-                        <span className="text-gray-500 text-lg font-semibold italic">{placeholder}</span>
+                        <span className="text-gray-500 font-medium italic text-sm">{placeholder || `Drop Block ${index + 1} Here`}</span>
                     )}
                 </div>
             );
         };
 
         // --- Componentes de Atividade ---
+
         const PronounInputActivity = ({ addPoints, data }) => {
             const [answers, setAnswers] = React.useState(Array(data.length).fill(''));
             const [feedback, setFeedback] = React.useState(Array(data.length).fill(null)); // null, 'success', 'error'
