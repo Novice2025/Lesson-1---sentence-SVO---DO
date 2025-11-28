@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RealTalk Daby (Corporate Edition)</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2300BCD4' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'%3E%3C/path%3E%3C/svg%3E">
+    <meta name="description" content="RealTalk Daby: Treinamento de inglês corporativo para profissionais brasileiros. Aprenda estrutura de frases com método Lego Block, gamificação e foco em TDAH.">
+    <meta name="keywords" content="inglês corporativo, inglês para brasileiros, aprender inglês, gramática inglês, TDAH, metodologia inovadora, drag and drop, gamificação, RealTalk Daby">
+    <meta name="author" content="Novice2025">
+    <meta property="og:title" content="RealTalk Daby (Corporate Edition)">
+    <meta property="og:description" content="Transforme seu Inglês Corporativo em seu maior ativo. Sem esforço. Com impacto.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourwebsite.com/index.html">
+    <!-- Adicione uma imagem OG para compartilhamento em redes sociais -->
+    <!-- <meta property="og:image" content="https://yourwebsite.com/og-image.jpg"> -->
+
+    <!-- Tailwind CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=Poppins:wght@700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        /* Custom CSS para o fundo interativo, cores e animações */
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(circle at 10% 20%, rgb(30, 30, 30) 0%, rgb(0, 0, 0) 100%);
+            overflow-x: hidden; /* Evita scroll horizontal */
+            color: #e2e8f0; /* Cor de texto padrão para dark mode */
+        }
+        h1, h2, h3 {
+            font-family: 'Poppins', sans-serif;
+        }
+        /* Animações e efeitos */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fadeInDown { animation: fadeInDown 0.6s ease-out forwards; }
+
+        @keyframes pulse-once {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 255, 255, 0.4); } /* Cyan glow */
+            70% { transform: scale(1.03); box-shadow: 0 0 0 15px rgba(0, 255, 255, 0); }
+            100% { transform: scale(1); }
+        }
+        .animate-pulse-once {
+            animation: pulse-once 1.5s ease-out;
+        }
+        .typing-cursor {
+            display: inline-block;
+            width: 0.1em;
+            height: 1.2em;
+            background-color: #f8fafc; /* White cursor */
+            animation: blink 1s step-end infinite;
+            margin-left: 2px;
+        }
+        @keyframes blink {
+            from, to { background-color: transparent }
+            50% { background-color: #f8fafc }
+        }
+        .shadow-neon {
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.6), 0 0 20px rgba(0, 255, 255, 0.4);
+        }
+
+        /* Cores de app.inner - exemplo de gradiente para texto */
+        .text-gradient-inner {
+            background: linear-gradient(45deg, #FFD700, #FF69B4, #8A2BE2); /* Exemplo de gradiente vibrante */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Customização para dropdowns em dark mode */
+        select {
+            background-color: #1a202c; /* bg-gray-900 */
+            color: #e2e8f0; /* text-gray-200 */
+            border-color: #4a5568; /* border-gray-600 */
+        }
+        select:focus {
+            outline: none;
+            border-color: #63b3ed; /* border-blue-400 */
+            box-shadow: 0 0 0 3px rgba(99, 179, 237, 0.5);
+        }
+
+        /* Fundo interativo (simulado com CSS, para um efeito mais avançado, JS seria necessário) */
+        .space-background {
+            position: fixed;
+            top: 0;
+ left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="10" cy="10" r="1" fill="white"/><circle cx="50" cy="30" r="0.5" fill="white"/><circle cx="80" cy="60" r="1.2" fill="white"/><circle cx="20" cy="80" r="0.8" fill="white"/><circle cx="60" cy="90" r="0.7" fill="white"/></svg>');
+            background-size: 100px 100px;
+            animation: moveStars 100s linear infinite;
+        }
+        @keyframes moveStars {
+            from { background-position: 0 0; }
+            to { background-position: 10000px 10000px; }
+        }
+
+        /* Elementos visuais (foguete e cérebro de IA) - usar SVGs inline para arquivo único */
+        .rocket-icon {
+            position: absolute;
+            bottom: 5%;
+            left: 10%;
+            width: 80px;
+            height: 80px;
+            animation: launch 10s ease-in-out infinite alternate;
+            z-index: 0;
+        }
+        .ai-brain-icon {
+            position: absolute;
+            top: 10%;
+            right: 10%;
+            width: 100px;
+            height: 100px;
+            animation: pulseBrain 5s ease-in-out infinite alternate;
+            z-index: 0;
+        }
+        @keyframes launch {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-50px) rotate(5deg); }
+            100% { transform: translateY(0) rotate(0deg); }
+        }
+        @keyframes pulseBrain {
+            0% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.05); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.8; }
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .lg\:col-span-1, .lg\:col-span-2 {
+                grid-column: span 1 / span 1;
+            }
+            .h1Class { font-size: 3rem; }
+            .explanationTitleClass { font-size: 1.5rem; }
+            .explanationTextClass { font-size: 1rem; }
+            .sectionTitleClass { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <!-- Elementos de fundo -->
+    <div class="space-background"></div>
+    <div class="rocket-icon">
+        <!-- SVG do foguete (exemplo, você pode substituir por um mais detalhado) -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#00BCD4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full">
+            <path d="M12 19v3M12 2v3M12 15a4 4 0 0 0-4 4v3h8v-3a4 4 0 0 0-4-4zM12 2a4 4 0 0 0-4 4v9h8V6a4 4 0 0 0-4-4zM12 15v-9"/>
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+        </svg>
+    </div>
+    <div class="ai-brain-icon">
+        <!-- SVG do cérebro de IA (exemplo, você pode substituir por um mais detalhado) -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#FF69B4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full">
+            <path d="M12 2c-3.314 0-6 2.686-6 6 0 2.222 1.204 4.156 3 5.202V22h6v-8.798c1.796-1.046 3-2.98 3-5.202 0-3.314-2.686-6-6-6z"/>
+            <path d="M12 22v-8.798c1.796-1.046 3-2.98 3-5.202 0-3.314-2.686-6-6-6"/>
+            <path d="M12 22v-8.798c-1.796-1.046-3-2.98-3-5.202 0-3.314 2.686-6 6-6"/>
+            <path d="M12 22c-3.314 0-6-2.686-6-6 0-2.222 1.204-4.156 3-5.202V2h6v8.798c1.796 1.046 3 2.98 3 5.202 0 3.314-2.686 6-6 6z"/>
+        </svg>
+    </div>
+
+    <div id="root" class="relative z-10">
+        <!-- O aplicativo React será montado aqui -->
+    </div>
+
+    <!-- React e ReactDOM CDN -->
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <!-- Babel CDN para transpilar JSX no navegador (APENAS PARA DESENVOLVIMENTO/DEMONSTRAÇÃO) -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- React DND CDN -->
+    <script src="https://unpkg.com/react-dnd@14/dist/umd/ReactDnD.min.js"></script>
+    <script src="https://unpkg.com/react-dnd-html5-backend@14/dist/umd/ReactDnDHTML5Backend.min.js"></script>
+    <!-- Lucide React Icons CDN (para ícones) -->
+    <script src="https://unpkg.com/lucide-react@0.292.0/dist/umd/lucide-react.min.js"></script>
+
+    <script type="text/babel">
+        // Desestruturar Lucide React para usar os ícones
+        const { RefreshCw, CheckCircle, XCircle, Focus } = LucideReact;
+
+        // --- Dados para as atividades ---
+        const PRONOUNS_DATA = [
+            { id: 1, pt: 'Eu', en: 'I' },
+            { id: 2, pt: 'Você', en: 'You' },
+            { id: 3, pt: 'Ele', en: 'He' },
+            { id: 4, pt: 'Ela', en: 'She' },
+            { id: 5, pt: 'Isso/Ele/Ela (coisa/animal)', en: 'It' },
+            { id: 6, pt: 'Nós', en: 'We' },
+            { id: 7, pt: 'Eles/Elas', en: 'They' },
+        ];
+
+        const PRONOUN_APPLICATION_DATA = [
+            { id: 1, pt: 'Maria e João', en: 'They' },
+            { id: 2, pt: 'Meu cachorro', en: 'It' },
+            { id: 3, pt: 'Você e eu', en: 'We' },
+            { id: 4, pt: 'A empresa', en: 'It' },
+            { id: 5, pt: 'Um carro', en: 'It' },
+            { id: 6, pt: 'O professor', en: 'He' },
+            { id: 7, pt: 'A aluna', en: 'She' },
+            { id: 8, pt: 'Os livros', en: 'They' },
+            { id: 9, pt: 'O tempo', en: 'It' },
+            { id: 10, pt: 'Minha família e eu', en: 'We' },
+        ];
+
+        const VERBS_DATA = [
+            { id: 1, pt: 'Negociar', en: 'Negotiate' },
+            { id: 2, pt: 'Implementar', en: 'Implement' },
+            { id: 3, pt: 'Analisar', en: 'Analyze' },
+            { id: 4, pt: 'Colaborar', en: 'Collaborate' },
+            { id: 5, pt: 'Gerenciar', en: 'Manage' },
+            { id: 6, pt: 'Desenvolver', en: 'Develop' },
+            { id: 7, pt: 'Apresentar', en: 'Present' },
+            { id: 8, pt: 'Avaliar', en: 'Evaluate' },
+            { id: 9, pt: 'Sugerir', en: 'Suggest' },
+            { id: 10, pt: 'Contribuir', en: 'Contribute' },
+            { id: 11, pt: 'Facilitar', en: 'Facilitate' },
+            { id: 12, pt: 'Otimizar', en: 'Optimize' },
+            { id: 13, pt: 'Delegar', en: 'Delegate' },
+            { id: 14, pt: 'Inovar', en: 'Innovate' },
+            { id: 15, pt: 'Prever', en: 'Predict' },
+        ];
+
+        const SVO_DRAG_DROP_DATA = [
+            { id: 1, target: [{ content: 'I', type: 'subject', color: 'bg-lime-500' }, { content: 'present', type: 'verb', color: 'bg-red-600' }, { content: 'the report', type: 'object', color: 'bg-fuchsia-500' }] },
+            { id: 2, target: [{ content: 'She', type: 'subject', color: 'bg-lime-500' }, { content: 'manages', type: 'verb', color: 'bg-red-600' }, { content: 'the team', type: 'object', color: 'bg-fuchsia-500' }] },
+            { id: 3, target: [{ content: 'We', type: 'subject', color: 'bg-lime-500' }, { content: 'develop', type: 'verb', color: 'bg-red-600' }, { content: 'new strategies', type: 'object', color: 'bg-fuchsia-500' }] },
+            { id: 4, target: [{ content: 'They', type: 'subject', color: 'bg-lime-500' }, { content: 'evaluate', type: 'verb', color: 'bg-red-600' }, { content: 'the project', type: 'object', color: 'bg-fuchsia-500' }] },
+            { id: 5, target: [{ content: 'He', type: 'subject', color: 'bg-lime-500' }, { content: 'optimizes', type: 'verb', color: 'bg-red-600' }, { content: 'the process', type: 'object', color: 'bg-fuchsia-500' }] },
+            { id: 6, target: [{ content: 'You', type: 'subject', color: 'bg-lime-500' }, { content: 'contribute', type: 'verb', color: 'bg-red-600' }, { content: 'ideas', type: 'object', color: 'bg-fuchsia-500' }] },
+            { id: 7, target: [{ content: 'The company', type: 'subject', color: 'bg-lime-500' }, { content: 'innovates', type: 'verb', color: 'bg-red-600' }, { content: 'solutions', type: 'object', color: 'bg-fuchsia-500' }] },
+            { id: 8, target: [{ content: 'My boss', type: 'subject', color: 'bg-lime-500' }, { content: 'delegates', type: 'verb', color: 'bg-red-600' }, { content: 'tasks', type: 'object', color: 'bg-fuchsia-500' }] },
+            { id: 9, target: [{ content: 'We', type: 'subject', color: 'bg-lime-500' }, { content: 'negotiate', type: 'verb', color: 'bg-red-600' }, { content: 'contracts', type: 'object', color: 'bg-fuchsia-500' }] },
+            { id: 10, target: [{ content: 'I', type: 'subject', color: 'bg-lime-500' }, { content: 'facilitate', type: 'verb', color: 'bg-red-600' }, { content: 'meetings', type: 'object', color: 'bg-fuchsia-500' }] },
+        ];
+
+        const AUXILIARY_GUESS_DATA = [
+            { id: 1, hint: 'Auxiliar para presente (2 letras)', answer: 'DO' },
+            { id: 2, hint: 'Auxiliar para presente (3 letras)', answer: 'DOES' },
+            { id: 3, hint: 'Auxiliar para passado (3 letras)', answer: 'DID' },
+            { id: 4, hint: 'Auxiliar para futuro (4 letras)', answer: 'WILL' },
+            { id: 5, hint: 'Auxiliar para habilidade (3 letras)', answer: 'CAN' },
+            { id: 6, hint: 'Auxiliar para conselho (6 letras)', answer: 'SHOULD' },
+        ];
+
+        const QUESTION_DRAG_DROP_DATA = [
+            { id: 1, target: [{ content: 'DO', type: 'auxiliary', color: 'bg-cyan-500' }, { content: 'you', type: 'subject', color: 'bg-lime-500' }, { content: 'have', type: 'verb', color: 'bg-red-600' }, { content: 'a question?', type: 'object', color: 'bg-fuchsia-500' }] },
+            { id: 2, target: [{ content: 'DOES', type: 'auxiliary', color: 'bg-cyan-500' }, { content: 'he', type: 'subject', color: 'bg-lime-500' }, { content: 'work', type: 'verb', color: 'bg-red-600' }, { content: 'in sales?', type: 'object', color: 'bg-fuchsia-500' }] },
+            { id: 3, target: [{ content: 'DID', type: 'auxiliary', color: 'bg-cyan-500' }, { content: 'they', type: 'subject', color: 'bg-lime-500' }, { content: 'finish', type: 'verb', color: 'bg-red-600' }, { content: 'the report?', type: 'object', color: 'bg-fuchsia-500' }] },
+            { id: 4, target: [{ content: 'DO', type: 'auxiliary', color: 'bg-cyan-500' }, { content: 'we', type: 'subject', color: 'bg-lime-500' }, { content: 'need', type: 'verb', color: 'bg-red-600' }, { content: 'more time?', type: 'object', color: 'bg-fuchsia-500' }] },
+            { id: 5, target: [{ content: 'DOES', type: 'auxiliary', color: 'bg-cyan-500' }, { content: 'the team', type: 'subject', color: 'bg-lime-500' }, { content: 'collaborate', type: 'verb', color: 'bg-red-600' }, { content: 'well?', type: 'object', color: 'bg-fuchsia-500' }] },
+            { id: 6, target: [{ content: 'DID', type: 'auxiliary', color: 'bg-cyan-500' }, { content: 'you', type: 'subject', color: 'bg-lime-500' }, { content: 'attend', type: 'verb', color: 'bg-red-600' }, { content: 'the meeting?', type: 'object', color: 'bg-fuchsia-500' }] },
+            { id: 7, target: [{ content: 'DO', type: 'auxiliary', color: 'bg-cyan-500' }, { content: 'I', type: 'subject', color: 'bg-lime-500' }, { content: 'understand', type: 'verb', color: 'bg-red-600' }, { content: 'this?', type: 'object', color: 'bg-fuchsia-500' }] },
+            { id: 8, target: [{ content: 'DOES', type: 'auxiliary', color: 'bg-cyan-500' }, { content: 'it', type: 'subject', color: 'bg-lime-500' }, { content: 'make', type: 'verb', color: 'bg-red-600' }, { content: 'sense?', type: 'object', color: 'bg-fuchsia-500' }] },
+            { id: 9, target: [{ content: 'DID', type: 'auxiliary', color: 'bg-cyan-500' }, { content: 'she', type: 'subject', color: 'bg-lime-500' }, { content: 'present', type: 'verb', color: 'bg-red-600' }, { content: 'the data?', type: 'object', color: 'bg-fuchsia-500' }] },
+            { id: 10, target: [{ content: 'DO', type: 'auxiliary', color: 'bg-cyan-500' }, { content: 'they', type: 'subject', color: 'bg-lime-500' }, { content: 'agree', type: 'verb', color: 'bg-red-600' }, { content: 'with the plan?', type: 'object', color: 'bg-fuchsia-500' }] },
+        ];
+
+        const QUESTION_TRANSLATION_DATA = [
+            { id: 1, pt: 'Você precisa de ajuda?', en: 'Do you need help?' },
+            { id: 2, pt: 'Ele fala português?', en: 'Does he speak Portuguese?' },
+            { id: 3, pt: 'Eles terminaram o projeto?', en: 'Did they finish the project?' },
+            { id: 4, pt: 'Nós temos uma reunião?', en: 'Do we have a meeting?' },
+            { id: 5, pt: 'A empresa inova?', en: 'Does the company innovate?' },
+            { id: 6, pt: 'Você delegou as tarefas?', en: 'Did you delegate the tasks?' },
+            { id: 7, pt: 'Eu estou claro?', en: 'Am I clear?' }, // Exceção intencional
+            { id: 8, pt: 'Você vai viajar?', en: 'Are you going to travel?' }, // Exceção intencional
+            { id: 9, pt: 'Ela colabora bem?', en: 'Does she collaborate well?' },
+            { id: 10, pt: 'Você entendeu a explicação?', en: 'Did you understand the explanation?' },
+        ];
+
+        // --- Componentes Reutilizáveis ---
+        const ITEM_TYPE = 'block';
+
+        const LegoBlock = ({ id, content, color, currentOrder }) => {
+            const [{ isDragging }, drag] = ReactDnD.useDrag(() => ({
+                type: ITEM_TYPE,
+                item: { id, content, color, index: currentOrder.findIndex(item => item.id === id) },
+                collect: (monitor) => ({
+                    isDragging: monitor.isDragging(),
+                }),
+            }), [id, content, currentOrder]);
+
+            return (
+                <div
+                    ref={drag}
+                    className={`
+                        ${color} text-gray-900 font-extrabold p-4 rounded-xl shadow-neon cursor-grab select-none
+                        transform transition-all duration-300 active:scale-105
+                        ${isDragging ? 'opacity-50 border-4 border-dashed border-gray-600' : 'opacity-100'}
+                        text-2xl sm:text-3xl tracking-wider min-w-[120px] text-center
+                    `}
+                    style={{ fontFamily: "'Inter', sans-serif" }}
+                >
+                    {content}
+                </div>
+            );
+        };
+
+        const DropZone = ({ index, onDropBlock, block, isCorrect, placeholder }) => {
+            const [{ isOver, canDrop }, drop] = ReactDnD.useDrop(() => ({
+                accept: ITEM_TYPE,
+                drop: (item) => onDropBlock(item, index),
+                collect: (monitor) => ({
+                    isOver: monitor.isOver(),
+                    canDrop: monitor.canDrop(),
+                }),
+            }), [index, onDropBlock]);
+
+            const isActive = isOver && canDrop;
+            let borderColor = 'border-gray-700';
+            let background = 'bg-gray-800/50 border-dashed';
+
+            if (block) {
+                borderColor = isCorrect ? 'border-lime-400 shadow-lg shadow-lime-900' : 'border-red-500 shadow-lg shadow-red-900';
+                background = 'bg-gray-900/50';
+            } else if (isActive) {
+                borderColor = 'border-cyan-500 bg-gray-700 transition duration-150';
+            }
+
+            return (
+                <div
+                    ref={drop}
+                    className={`
+                        min-h-[6rem] w-full sm:w-1/4 flex items-center justify-center p-2 rounded-xl border-4 transition-all duration-300
+                        ${borderColor} ${background}
+                        ${isCorrect ? 'animate-pulse-once' : ''}
+                    `}
+                >
+                    {block ? (
+                        <LegoBlock
+                            id={block.id}
+                            content={block.content}
+                            color={block.color}
+                            currentOrder={[]} // Passar vazio pois o bloco já está na dropzone
+                        />
+                    ) : (
+                        <span className="text-gray-500 font-medium italic text-sm">{placeholder || `Drop Block ${index + 1} Here`}</span>
+                    )}
+                </div>
+            );
+        };
+
+        // --- Componentes de Atividade ---
+
+        const PronounInputActivity = ({ addPoints, data }) => {
+            const [answers, setAnswers] = React.useState(Array(data.length).fill(''));
+            const [feedback, setFeedback] = React.useState(Array(data.length).fill(null)); // null, 'success', 'error'
+
+            const handleChange = (e, index) => {
+                const newAnswers = [...answers];
+                newAnswers[index] = e.target.value;
+                setAnswers(newAnswers);
+            };
+
+            const checkAnswer = (index) => {
+                const userAnswer = answers[index].trim().toLowerCase();
+                const correctAnswer = data[index].en.toLowerCase();
+                if (userAnswer === correctAnswer) {
+                    const newFeedback = [...feedback];
+                    newFeedback[index] = 'success';
+                    setFeedback(newFeedback);
+                    addPoints(10);
+                } else {
+                    const newFeedback = [...feedback];
+                    newFeedback[index] = 'error';
+                    setFeedback(newFeedback);
+                }
+            };
+
+            return (
+                <div className="mt-6 space-y-4">
+                    <h3 className="text-xl font-semibold text-gray-200 mb-3">Exercício: Escreva os Pronomes</h3>
+                    {data.map((item, index) => (
+                        <div key={item.id} className="flex items-center space-x-3">
+                            <span className="text-gray-300 w-24">{item.pt}:</span>
+                            <input
+                                type="text"
+                                value={answers[index]}
+                                onChange={(e) => handleChange(e, index)}
+                                className={`flex-grow p-2 rounded-lg bg-gray-700 text-gray-100 border-2 ${
+                                    feedback[index] === 'success' ? 'border-lime-500' :
+                                    feedback[index] === 'error' ? 'border-red-500' : 'border-gray-600'
+                                } focus:outline-none focus:border-cyan-500`}
+                                placeholder={`Ex: ${item.en}`}
+                            />
+                            <button
+                                onClick={() => checkAnswer(index)}
+                                className="p-2 rounded-lg bg-cyan-600 hover:bg-cyan-700 text-white transition duration-150"
+                            >
+                                {feedback[index] === 'success' ? <CheckCircle className="w-5 h-5" /> :
+                                 feedback[index] === 'error' ? <XCircle className="w-5 h-5" /> : 'Verificar'}
+                            </button>
+                        </div>
+                    ))}
+                </div>
+            );
+        };
+
+        const PronounApplicationActivity = ({ addPoints }) => {
+            const [answers, setAnswers] = React.useState(Array(PRONOUN_APPLICATION_DATA.length).fill(''));
+            const [feedback, setFeedback] = React.useState(Array(PRONOUN_APPLICATION_DATA.length).fill(null));
+
+            const handleChange = (e, index) => {
+                const newAnswers = [...answers];
+                newAnswers[index] = e.target.value;
+                setAnswers(newAnswers);
+            };
+
+            const checkAnswer = (index) => {
+                const userAnswer = answers[index].trim().toLowerCase();
+                const correctAnswer = PRONOUN_APPLICATION_DATA[index].en.toLowerCase();
+                if (userAnswer === correctAnswer) {
+                    const newFeedback = [...feedback];
+                    newFeedback[index] = 'success';
+                    setFeedback(newFeedback);
+                    addPoints(10);
+                } else {
+                    const newFeedback = [...feedback];
+                    newFeedback[index] = 'error';
+                    setFeedback(newFeedback);
+                }
+            };
+
+            return (
+                <div className="mt-6 space-y-4">
+                    <h3 className="text-xl font-semibold text-gray-200 mb-3">Exercício: Substitua por Pronomes</h3>
+                    {PRONOUN_APPLICATION_DATA.map((item, index) => (
+                        <div key={item.id} className="flex items-center space-x-3">
+                            <span className="text-gray-300 w-40">{item.pt}:</span>
+                            <input
+                                type="text"
+                                value={answers[index]}
+                                onChange={(e) => handleChange(e, index)}
+                                className={`flex-grow p-2 rounded-lg bg-gray-700 text-gray-100 border-2 ${
+                                    feedback[index] === 'success' ? 'border-lime-500' :
+                                    feedback[index] === 'error' ? 'border-red-500' : 'border-gray-600'
+                                } focus:outline-none focus:border-cyan-500`}
+                                placeholder={`Ex: ${item.en}`}
+                            />
+                            <button
+                                onClick={() => checkAnswer(index)}
+                                className="p-2 rounded-lg bg-cyan-600 hover:bg-cyan-700 text-white transition duration-150"
+                            >
+                                {feedback[index] === 'success' ? <CheckCircle className="w-5 h-5" /> :
+                                 feedback[index] === 'error' ? <XCircle className="w-5 h-5" /> : 'Verificar'}
+                            </button>
+                        </div>
+                    ))}
+                </div>
+            );
+        };
+
+        const VerbTranslationActivity = ({ addPoints, data }) => {
+            const [answers, setAnswers] = React.useState(Array(data.length).fill(''));
+            const [feedback, setFeedback] = React.useState(Array(data.length).fill(null));
+
+            const handleChange = (e, index) => {
+                const newAnswers = [...answers];
+                newAnswers[index] = e.target.value;
+                setAnswers(newAnswers);
+            };
+
+            const checkAnswer = (index) => {
+                const userAnswer = answers[index].trim().toLowerCase();
+                const correctAnswer = data[index].en.toLowerCase();
+                if (userAnswer === correctAnswer) {
+                    const newFeedback = [...feedback];
+                    newFeedback[index] = 'success';
+                    setFeedback(newFeedback);
+                    addPoints(10);
+                } else {
+                    const newFeedback = [...feedback];
+                    newFeedback[index] = 'error';
+                    setFeedback(newFeedback);
+                }
+            };
+
+            return (
+                <div className="mt-6 space-y-4">
+                    <h3 className="text-xl font-semibold text-gray-200 mb-3">Exercício: Traduza os Verbos</h3>
+                    {data.map((item, index) => (
+                        <div key={item.id} className="flex items-center space-x-3">
+                            <span className="text-gray-300 w-32">{item.pt}:</span>
+                            <input
+                                type="text"
+                                value={answers[index]}
+                                onChange={(e) => handleChange(e, index)}
+                                className={`flex-grow p-2 rounded-lg bg-gray-700 text-gray-100 border-2 ${
+                                    feedback[index] === 'success' ? 'border-lime-500' :
+                                    feedback[index] === 'error' ? 'border-red-500' : 'border-gray-600'
+                                } focus:outline-none focus:border-cyan-500`}
+                                placeholder={`Ex: ${item.en}`}
+                            />
+                            <button
+                                onClick={() => checkAnswer(index)}
+                                className="p-2 rounded-lg bg-cyan-600 hover:bg-cyan-700 text-white transition duration-150"
+                            >
+                                {feedback[index] === 'success' ? <CheckCircle className="w-5 h-5" /> :
+                                 feedback[index] === 'error' ? <XCircle className="w-5 h-5" /> : 'Verificar'}
+                            </button>
+                        </div>
+                    ))}
+                </div>
+            );
+        };
+
+        const SvoDragDropDrill = ({ addPoints, data }) => {
+            const [currentExerciseIndex, setCurrentExerciseIndex] = React.useState(0);
+            const currentTarget = data[currentExerciseIndex].target;
+            const [currentOrder, setCurrentOrder] = React.useState(Array(currentTarget.length).fill(null));
+            const [shuffledBlocks, setShuffledBlocks] = React.useState([]);
+            const [feedback, setFeedback] = React.useState({ message: '', type: null });
+
+            const shuffle = React.useCallback(() => {
+                let array = [...currentTarget];
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+                setShuffledBlocks(array);
+                setCurrentOrder(Array(currentTarget.length).fill(null));
+                setFeedback({ message: '', type: null });
+            }, [currentTarget]);
+
+            React.useEffect(() => {
+                shuffle();
+            }, [shuffle, currentExerciseIndex]); // Reset on exercise change
+
+            const checkCompletion = React.useCallback((newOrder) => {
+                const isComplete = newOrder.every(block => block !== null);
+                if (isComplete) {
+                    const isCorrect = newOrder.every((block, index) => block.content === currentTarget[index].content);
+                    if (isCorrect) {
+                        setFeedback({ message: "Sensacional! A estrutura SVO está perfeita.", type: 'success' });
+                        addPoints(20);
+                    } else {
+                        setFeedback({ message: "Quase lá! A estrutura SVO está incorreta. Revise a ordem dos blocos.", type: 'error' });
+                    }
+                }
+            }, [currentTarget, addPoints]);
+
+            const onDropBlock = React.useCallback((droppedBlock, dropIndex) => {
+                const blockToMove = currentTarget.find(block => block.id === droppedBlock.id);
+                if (!blockToMove) return;
+
+                const oldIndex = currentOrder.findIndex(block => block && block.id === droppedBlock.id);
+                let newOrder = [...currentOrder];
+
+                if (oldIndex !== -1) {
+                    newOrder[oldIndex] = null;
+                }
+
+                newOrder[dropIndex] = blockToMove;
+                setCurrentOrder(newOrder);
+                checkCompletion(newOrder);
+
+                const blocksInDropZone = newOrder.filter(b => b !== null).map(b => b.id);
+                setShuffledBlocks(currentTarget.filter(b => !blocksInDropZone.includes(b.id)));
+            }, [currentOrder, checkCompletion, currentTarget]);
+
+            const isBlockCorrect = React.useCallback((block, index) => {
+                return block && block.content === currentTarget[index].content;
+            }, [currentTarget]);
+
+            const handleNextExercise = () => {
+                if (currentExerciseIndex < data.length - 1) {
+                    setCurrentExerciseIndex(prev => prev + 1);
+                } else {
+                    setFeedback({ message: "Parabéns! Você completou todos os exercícios SVO!", type: 'success' });
+                }
+            };
+
+            return (
+                <div className="p-6 bg-gray-900 rounded-2xl shadow-2xl shadow-black border border-cyan-700">
+                    <h3 className="text-xl font-semibold text-gray-300 mb-4 flex items-center justify-between">
+                        Monte a Frase (SVO) - Exercício {currentExerciseIndex + 1} de {data.length}
+                        <button onClick={shuffle} className="flex items-center text-sm text-cyan-400 hover:text-cyan-200 transition duration-150 p-2 rounded-lg bg-gray-800 hover:bg-gray-700 border border-cyan-500/50">
+                            <RefreshCw className="w-4 h-4 mr-1" /> Resetar
+                        </button>
+                    </h3>
+                    <div className="flex flex-wrap justify-center gap-2 sm:gap-4 p-4 bg-gray-900/60 rounded-2xl shadow-inner shadow-black border border-gray-700 min-h-[10rem] mb-4">
+                        {currentOrder.map((block, index) => (
+                            <DropZone
+                                key={index}
+                                index={index}
+                                onDropBlock={onDropBlock}
+                                block={block}
+                                isCorrect={isBlockCorrect(block, index)}
+                                placeholder={currentTarget[index].type.toUpperCase()}
+                            />
+                        ))}
+                    </div>
+                    {feedback.message && (
+                        <div className={`p-4 rounded-xl text-center font-bold text-lg flex items-center justify-center transition-all duration-300 shadow-xl mb-4 ${
+                            feedback.type === 'success' ? 'bg-lime-900/70 text-lime-300 border-lime-500 animate-pulse-once' : 'bg-red-900/70 text-red-400 border-red-500'
+                        }`}>
+                            {feedback.type === 'success' ? <CheckCircle className="w-6 h-6 mr-3" /> : <XCircle className="w-6 h-6 mr-3" />}
+                            {feedback.message}
+                        </div>
+                    )}
+                    <div className="flex flex-wrap justify-center gap-3 sm:gap-4 mb-4">
+                        {shuffledBlocks.map((block) => (
+                            <LegoBlock key={block.id} id={block.id} content={block.content} color={block.color} currentOrder={shuffledBlocks} />
+                        ))}
+                    </div>
+                    {feedback.type === 'success' && currentExerciseIndex < data.length - 1 && (
+                        <button onClick={handleNextExercise} className="w-full p-3 rounded-lg bg-fuchsia-600 hover:bg-fuchsia-700 text-white font-bold text-lg transition duration-150 mt-4">
+                            Próximo Exercício <span className="ml-2">→</span>
+                        </button>
+                    )}
+                </div>
+            );
+        };
+
+        const AuxiliaryGuessActivity = ({ addPoints, data }) => {
+            const [answers, setAnswers] = React.useState(Array(data.length).fill(''));
+            const [feedback, setFeedback] = React.useState(Array(data.length).fill(null));
+
+            const handleChange = (e, index) => {
+                const newAnswers = [...answers];
+                newAnswers[index] = e.target.value;
+                setAnswers(newAnswers);
+            };
+
+            const checkAnswer = (index) => {
+                const userAnswer = answers[index].trim().toUpperCase();
+                const correctAnswer = data[index].answer.toUpperCase();
+                if (userAnswer === correctAnswer) {
+                    const newFeedback = [...feedback];
+                    newFeedback[index] = 'success';
+                    setFeedback(newFeedback);
+                    addPoints(15);
+                } else {
+                    const newFeedback = [...feedback];
+                    newFeedback[index] = 'error';
+                    setFeedback(newFeedback);
+                }
+            };
+
+            return (
+                <div className="mt-6 space-y-4">
+                    <h3 className="text-xl font-semibold text-gray-200 mb-3">Exercício: Adivinhe o Auxiliar</h3>
+                    {data.map((item, index) => (
+                        <div key={item.id} className="flex items-center space-x-3">
+                            <span className="text-gray-300 w-64">{item.hint}:</span>
+                            <input
+                                type="text"
+                                value={answers[index]}
+                                onChange={(e) => handleChange(e, index)}
+                                maxLength={item.answer.length}
+                                className={`flex-grow p-2 rounded-lg bg-gray-700 text-gray-100 border-2 ${
+                                    feedback[index] === 'success' ? 'border-lime-500' :
+                                    feedback[index] === 'error' ? 'border-red-500' : 'border-gray-600'
+                                } focus:outline-none focus:border-cyan-500`}
+                                placeholder={`_ _ _`}
+                            />
+                            <button
+                                onClick={() => checkAnswer(index)}
+                                className="p-2 rounded-lg bg-cyan-600 hover:bg-cyan-700 text-white transition duration-150"
+                            >
+                                {feedback[index] === 'success' ? <CheckCircle className="w-5 h-5" /> :
+                                 feedback[index] === 'error' ? <XCircle className="w-5 h-5" /> : 'Verificar'}
+                            </button>
+                        </div>
+                    ))}
+                </div>
+            );
+        };
+
+        const QuestionDragDropDrill = ({ addPoints, data }) => {
+            const [currentExerciseIndex, setCurrentExerciseIndex] = React.useState(0);
+            const currentTarget = data[currentExerciseIndex].target;
+            const [currentOrder, setCurrentOrder] = React.useState(Array(currentTarget.length).fill(null));
+            const [shuffledBlocks, setShuffledBlocks] = React.useState([]);
+            const [feedback, setFeedback] = React.useState({ message: '', type: null });
+
+            const shuffle = React.useCallback(() => {
+                let array = [...currentTarget];
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+                setShuffledBlocks(array);
+                setCurrentOrder(Array(currentTarget.length).fill(null));
+                setFeedback({ message: '', type: null });
+            }, [currentTarget]);
+
+            React.useEffect(() => {
+                shuffle();
+            }, [shuffle, currentExerciseIndex]);
+
+            const checkCompletion = React.useCallback((newOrder) => {
+                const isComplete = newOrder.every(block => block !== null);
+                if (isComplete) {
+                    const isCorrect = newOrder.every((block, index) => block.content === currentTarget[index].content);
+                    if (isCorrect) {
+                        setFeedback({ message: "Sensacional! A pergunta está perfeita. A 'luz de pergunta' está ligada corretamente!", type: 'success' });
+                        addPoints(25);
+                    } else {
+                        setFeedback({ message: "Quase lá! A pergunta está incorreta. Revise a ordem: Auxiliar + Ator + Ação.", type: 'error' });
+                    }
+                }
+            }, [currentTarget, addPoints]);
+
+            const onDropBlock = React.useCallback((droppedBlock, dropIndex) => {
+                const blockToMove = currentTarget.find(block => block.id === droppedBlock.id);
+                if (!blockToMove) return;
+
+                const oldIndex = currentOrder.findIndex(block => block && block.id === droppedBlock.id);
+                let newOrder = [...currentOrder];
+
+                if (oldIndex !== -1) {
+                    newOrder[oldIndex] = null;
+                }
+
+                newOrder[dropIndex] = blockToMove;
+                setCurrentOrder(newOrder);
+                checkCompletion(newOrder);
+
+                const blocksInDropZone = newOrder.filter(b => b !== null).map(b => b.id);
+                setShuffledBlocks(currentTarget.filter(b => !blocksInDropZone.includes(b.id)));
+            }, [currentOrder, checkCompletion, currentTarget]);
+
+            const isBlockCorrect = React.useCallback((block, index) => {
+                return block && block.content === currentTarget[index].content;
+            }, [currentTarget]);
+
+            const handleNextExercise = () => {
+                if (currentExerciseIndex < data.length - 1) {
+                    setCurrentExerciseIndex(prev => prev + 1);
+                } else {
+                    setFeedback({ message: "Parabéns! Você completou todos os exercícios de perguntas!", type: 'success' });
+                }
+            };
+
+            return (
+                <div className="p-6 bg-gray-900 rounded-2xl shadow-2xl shadow-black border border-cyan-700 mt-6">
+                    <h3 className="text-xl font-semibold text-gray-300 mb-4 flex items-center justify-between">
+                        Monte a Pergunta - Exercício {currentExerciseIndex + 1} de {data.length}
+                        <button onClick={shuffle} className="flex items-center text-sm text-cyan-400 hover:text-cyan-200 transition duration-150 p-2 rounded-lg bg-gray-800 hover:bg-gray-700 border border-cyan-500/50">
+                            <RefreshCw className="w-4 h-4 mr-1" /> Resetar
+                        </button>
+                    </h3>
+                    <div className="flex flex-wrap justify-center gap-2 sm:gap-4 p-4 bg-gray-900/60 rounded-2xl shadow-inner shadow-black border border-gray-700 min-h-[10rem] mb-4">
+                        {currentOrder.map((block, index) => (
+                            <DropZone
+                                key={index}
+                                index={index}
+                                onDropBlock={onDropBlock}
+                                block={block}
+                                isCorrect={isBlockCorrect(block, index)}
+                                placeholder={currentTarget[index].type.toUpperCase()}
+                            />
+                        ))}
+                    </div>
+                    {feedback.message && (
+                        <div className={`p-4 rounded-xl text-center font-bold text-lg flex items-center justify-center transition-all duration-300 shadow-xl mb-4 ${
+                            feedback.type === 'success' ? 'bg-lime-900/70 text-lime-300 border-lime-500 animate-pulse-once' : 'bg-red-900/70 text-red-400 border-red-500'
+                        }`}>
+                            {feedback.type === 'success' ? <CheckCircle className="w-6 h-6 mr-3" /> : <XCircle className="w-6 h-6 mr-3" />}
+                            {feedback.message}
+                        </div>
+                    )}
+                    <div className="flex flex-wrap justify-center gap-3 sm:gap-4 mb-4">
+                        {shuffledBlocks.map((block) => (
+                            <LegoBlock key={block.id} id={block.id} content={block.content} color={block.color} currentOrder={shuffledBlocks} />
+                        ))}
+                    </div>
+                    {feedback.type === 'success' && currentExerciseIndex < data.length - 1 && (
+                        <button onClick={handleNextExercise} className="w-full p-3 rounded-lg bg-fuchsia-600 hover:bg-fuchsia-700 text-white font-bold text-lg transition duration-150 mt-4">
+                            Próxima Pergunta <span className="ml-2">→</span>
+                        </button>
+                    )}
+                </div>
+            );
+        };
+
+        const QuestionTranslationActivity = ({ addPoints, data }) => {
+            const [answers, setAnswers] = React.useState(Array(data.length).fill(''));
+            const [feedback, setFeedback] = React.useState(Array(data.length).fill(null));
+
+            const handleChange = (e, index) => {
+                const newAnswers = [...answers];
+                newAnswers[index] = e.target.value;
+                setAnswers(newAnswers);
+            };
+
+            const checkAnswer = (index) => {
+                const userAnswer = answers[index].trim().toLowerCase();
+                const correctAnswer = data[index].en.toLowerCase();
+                if (userAnswer === correctAnswer) {
+                    const newFeedback = [...feedback];
+                    newFeedback[index] = 'success';
+                    setFeedback(newFeedback);
+                    addPoints(20);
+                } else {
+                    const newFeedback = [...feedback];
+                    newFeedback[index] = 'error';
+                    setFeedback(newFeedback);
+                }
+            };
+
+            return (
+                <div className="mt-6 space-y-4">
+                    <h3 className="text-xl font-semibold text-gray-200 mb-3">Exercício: Traduza as Perguntas</h3>
+                    {data.map((item, index) => (
+                        <div key={item.id} className="flex items-center space-x-3">
+                            <span className="text-gray-300 w-64">{item.pt}:</span>
+                            <input
+                                type="text"
+                                value={answers[index]}
+                                onChange={(e) => handleChange(e, index)}
+                                className={`flex-grow p-2 rounded-lg bg-gray-700 text-gray-100 border-2 ${
+                                    feedback[index] === 'success' ? 'border-lime-500' :
+                                    feedback[index] === 'error' ? 'border-red-500' : 'border-gray-600'
+                                } focus:outline-none focus:border-cyan-500`}
+                                placeholder={`Ex: ${item.en}`}
+                            />
+                            <button
+                                onClick={() => checkAnswer(index)}
+                                className="p-2 rounded-lg bg-cyan-600 hover:bg-cyan-700 text-white transition duration-150"
+                            >
+                                {feedback[index] === 'success' ? <CheckCircle className="w-5 h-5" /> :
+                                 feedback[index] === 'error' ? <XCircle className="w-5 h-5" /> : 'Verificar'}
+                            </button>
+                        </div>
+                    ))}
+                </div>
+            );
+        };
+
+
+        // --- Main App Component ---
+        const App = () => {
+            const [score, setScore] = React.useState(0);
+            const [progress, setProgress] = React.useState(0); // 0-100%
+
+            const addPoints = React.useCallback((points) => {
+                setScore(prev => prev + points);
+                // Lógica para atualizar o progresso baseado nas seções completas
+                // Isso pode ser mais complexo, somando pontos máximos por seção e calculando a porcentagem
+                // Por enquanto, um placeholder simples:
+                setProgress(prev => Math.min(100, prev + 1)); // Aumenta 1% por ponto, até 100
+            }, []);
+
+            // Tailwind classes (já definidas no seu código, adaptadas para a nova paleta)
+            const h1Class = "text-4xl sm:text-6xl font-extrabold text-white mb-4 tracking-tighter drop-shadow-lg shadow-cyan-500/50";
+            const explanationTitleClass = "text-2xl font-bold text-cyan-400 mt-6 mb-3 border-b-2 border-fuchsia-500 pb-1 flex items-center drop-shadow-sm";
+            const explanationTextClass = "text-lg text-gray-300 leading-relaxed";
+            const highlightClass = "font-bold italic text-red-500 drop-shadow-md";
+            const ptHighlightClass = "font-bold italic text-lime-400 drop-shadow-md";
+            const focusCardClass = "bg-gray-800 p-6 rounded-2xl shadow-2xl border border-cyan-700";
+            const sectionTitleClass = "text-3xl font-bold text-center text-gray-100 mb-6 drop-shadow-lg";
+
+            return (
+                <ReactDnD.DndProvider backend={ReactDnDHTML5Backend.HTML5Backend}>
+                    <div className="min-h-screen pt-12 pb-20 px-4 sm:px-6 lg:px-8 relative z-10">
+                        <header className="text-center mb-12">
+                            <h1 className={h1Class}>
+                                <span className="inline-block animate-fadeInDown transition duration-500 delay-100 text-gradient-inner">RealTalk Daby</span>
+                                <span className="inline-block text-cyan-400 ml-3 transform hover:scale-105 transition duration-200 animate-fadeInDown delay-200">(Corporate Edition)</span>
+                            </h1>
+                            <p className="text-xl font-medium text-gray-400 mt-2 italic">Structural Training for Brazilian Speakers</p>
+                            <div className="mt-8 text-center">
+                                <h2 className="text-3xl font-bold text-fuchsia-400 mb-2">RealTalk Daby</h2>
+                                <p className="text-xl text-gray-300">Comunicação que Decola.</p>
+                                <p className="text-lg text-gray-400 mt-1">Transforme seu Inglês Corporativo em seu maior ativo. Sem esforço. Com impacto.</p>
+                            </div>
+                        </header>
+
+                        {/* Score and Progress Bar */}
+                        <div className="max-w-6xl mx-auto mb-10 bg-gray-800 p-4 rounded-xl shadow-lg border border-cyan-700 flex items-center justify-between">
+                            <span className="text-xl font-bold text-lime-400">Pontos: {score}</span>
+                            <div className="w-2/3 bg-gray-700 rounded-full h-4">
+                                <div className="bg-fuchsia-500 h-4 rounded-full transition-all duration-500" style={{ width: `${progress}%` }}></div>
+                            </div>
+                            <span className="text-xl font-bold text-cyan-400">Progresso: {progress}%</span>
+                        </div>
+
+                        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-10">
+                            {/* LEFT COLUMN: Explanations */}
+                            <div className="lg:col-span-1 space-y-8">
+                                {/* Seção 1: Pronomes Pessoais */}
+                                <div className={focusCardClass}>
+                                    <h2 className={explanationTitleClass}><Focus className="w-6 h-6 mr-2 text-fuchsia-400"/> 1. Pronomes Pessoais: Quem faz a ação.</h2>
+                                    <p className={explanationTextClass}>Pronomes substituem nomes. Eles indicam o "ator" da frase.</p>
+                                    <PronounInputActivity addPoints={addPoints} data={PRONOUNS_DATA} />
+                                    <PronounApplicationActivity addPoints={addPoints} />
+                                </div>
+
+                                {/* Seção 2: Verbos de Ação */}
+                                <div className={focusCardClass}>
+                                    <h2 className={explanationTitleClass}><Focus className="w-6 h-6 mr-2 text-fuchsia-400"/> 2. Verbos de Ação: O que acontece e quando.</h2>
+                                    <p className={explanationTextClass}>Verbos mostram uma ação (correr, comer) e indicam o tempo.</p>
+                                    <VerbTranslationActivity addPoints={addPoints} data={VERBS_DATA} />
+                                </div>
+
+                                {/* Seção 3: Objeto da Frase */}
+                                <div className={focusCardClass}>
+                                    <h2 className={explanationTitleClass}><Focus className="w-6 h-6 mr-2 text-fuchsia-400"/> 3. Objeto da Frase: O alvo da ação.</h2>
+                                    <p className={explanationTextClass}>O objeto é o "alvo" do verbo. Responde "o quê?" ou "quem?" depois do verbo.</p>
+                                </div>
+
+                                {/* Seção 4: Verbos Auxiliares */}
+                                <div className={focusCardClass}>
+                                    <h2 className={explanationTitleClass}><Focus className="w-6 h-6 mr-2 text-fuchsia-400"/> 4. Verbos Auxiliares: Marcam a pergunta.</h2>
+                                    <p className={explanationTextClass}>Auxiliares não têm significado próprio na pergunta. Eles *indicam* que é uma pergunta.</p>
+                                    <AuxiliaryGuessActivity addPoints={addPoints} data={AUXILIARY_GUESS_DATA} />
+                                </div>
+
+                                {/* Seção 6: Por Que Usar DO/DOES/DID */}
+                                <div className={focusCardClass}>
+                                    <h2 className={explanationTitleClass}><Focus className="w-6 h-6 mr-2 text-fuchsia-400"/> 6. DO/DOES/DID: Botão de interrogação para AÇÕES.</h2>
+                                    <p className={explanationTextClass}>
+                                        Se a pergunta é sobre uma <span className="font-bold text-cyan-400">AÇÃO</span> (o que alguém *faz*), use <span className="font-bold text-lime-400">DO/DOES/DID</span>.
+                                        É o sinal do inglês para "Estou perguntando sobre uma ação!".
+                                    </p>
+                                    <p className={`${explanationTextClass} mt-4`}>
+                                        <span className={highlightClass}>Não use DO/DOES/DID se:</span> já tem TO BE (am, is, are), um modal (can, will), ou auxiliar de tempo composto (have/has).
+                                    </p>
+                                </div>
+                            </div>
+
+                            {/* RIGHT COLUMN: Interactive Drills */}
+                            <div className="lg:col-span-2 space-y-6">
+                                {/* Seção 3.1: Drag and Drop SVO */}
+                                <h2 className={sectionTitleClass}>🔨 3.1 Montagem SVO: Sujeito, Verbo, Objeto</h2>
+                                <SvoDragDropDrill addPoints={addPoints} data={SVO_DRAG_DROP_DATA} />
+
+                                {/* Seção 5: Formando Perguntas com DO/DOES/DID */}
+                                <h2 className={sectionTitleClass}>❓ 5. Formando Perguntas: Auxiliar + Ator + Ação</h2>
+                                <div className={focusCardClass}>
+                                    <p className={explanationTextClass}>
+                                        <span className={highlightClass}>❌ Erro Comum:</span> "Am I have a problem?" ou "I can to do."
+                                        <br/>
+                                        <span className="font-bold text-cyan-400">Lógica:</span> <span className="font-bold text-lime-400">DO/DOES/DID</span> (Luz de Pergunta) + <span className="font-bold text-fuchsia-400">Sujeito</span> + <span className="font-bold text-red-500">Verbo Principal (base)</span>.
+                                    </p>
+                                    <p className={`${explanationTextClass} mt-2`}>
+                                        <span className={ptHighlightClass}>Exemplo:</span> "Você trabalha aqui?" -> <span className="font-bold text-cyan-400">DO</span> <span className="font-bold text-fuchsia-400">you</span> <span className="font-bold text-red-500">work</span> here?
+                                    </p>
+                                </div>
+                                <QuestionDragDropDrill addPoints={addPoints} data={QUESTION_DRAG_DROP_DATA} />
+
+                                {/* Seção 5.1: Tradução de Perguntas */}
+                                <h2 className={sectionTitleClass}>📝 5.1 Tradução: Perguntas em Inglês</h2>
+                                <QuestionTranslationActivity addPoints={addPoints} data={QUESTION_TRANSLATION_DATA} />
+                            </div>
+                        </div>
+
+                        <footer className="text-center mt-20 text-gray-500 text-sm border-t border-gray-700 pt-4">
+                            <p>Created by Novice2025</p>
+                            <p className="mt-1 font-bold text-cyan-400">L1X2 Lego block method</p>
+                        </footer>
+                    </div>
+                </ReactDnD.DndProvider>
+            );
+        };
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>
