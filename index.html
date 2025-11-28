@@ -176,8 +176,11 @@
     <script src="https://unpkg.com/lucide-react@0.292.0/dist/umd/lucide-react.min.js"></script>
 
     <script type="text/babel">
-        // Desestruturar Lucide React para usar os ícones
-        const { RefreshCw, CheckCircle, XCircle, Focus } = LucideReact;
+        // CORREÇÃO APLICADA AQUI: Acessar os ícones Lucide React diretamente do objeto global
+        const RefreshCw = LucideReact.RefreshCw;
+        const CheckCircle = LucideReact.CheckCircle;
+        const XCircle = LucideReact.XCircle;
+        const Focus = LucideReact.Focus;
 
         // --- Dados para as atividades ---
         const PRONOUNS_DATA = [
@@ -290,7 +293,6 @@
                         ${isDragging ? 'opacity-50 border-4 border-dashed border-gray-600' : 'opacity-100'}
                         text-2xl sm:text-3xl tracking-wider min-w-[120px] text-center
                     `}
-                    style={{ fontFamily: "'Inter', sans-serif" }}
                 >
                     {content}
                 </div>
@@ -298,33 +300,22 @@
         };
 
         const DropZone = ({ index, onDropBlock, block, isCorrect, placeholder }) => {
-            const [{ isOver, canDrop }, drop] = ReactDnD.useDrop(() => ({
+            const [{ isOver }, drop] = ReactDnD.useDrop(() => ({
                 accept: ITEM_TYPE,
                 drop: (item) => onDropBlock(item, index),
                 collect: (monitor) => ({
                     isOver: monitor.isOver(),
-                    canDrop: monitor.canDrop(),
                 }),
             }), [index, onDropBlock]);
-
-            const isActive = isOver && canDrop;
-            let borderColor = 'border-gray-700';
-            let background = 'bg-gray-800/50 border-dashed';
-
-            if (block) {
-                borderColor = isCorrect ? 'border-lime-400 shadow-lg shadow-lime-900' : 'border-red-500 shadow-lg shadow-red-900';
-                background = 'bg-gray-900/50';
-            } else if (isActive) {
-                borderColor = 'border-cyan-500 bg-gray-700 transition duration-150';
-            }
 
             return (
                 <div
                     ref={drop}
                     className={`
-                        min-h-[6rem] w-full sm:w-1/4 flex items-center justify-center p-2 rounded-xl border-4 transition-all duration-300
-                        ${borderColor} ${background}
-                        ${isCorrect ? 'animate-pulse-once' : ''}
+                        relative flex items-center justify-center p-4 rounded-xl border-2 border-dashed
+                        ${isOver ? 'border-cyan-400 bg-cyan-900/20' : 'border-gray-600'}
+                        ${block ? (isCorrect ? 'bg-lime-900/30 border-lime-500' : 'bg-red-900/30 border-red-500') : ''}
+                        min-w-[120px] min-h-[70px] text-center
                     `}
                 >
                     {block ? (
@@ -332,17 +323,16 @@
                             id={block.id}
                             content={block.content}
                             color={block.color}
-                            currentOrder={[]} // Passar vazio pois o bloco já está na dropzone
+                            currentOrder={[]} // Não é arrastável da zona de drop
                         />
                     ) : (
-                        <span className="text-gray-500 font-medium italic text-sm">{placeholder || `Drop Block ${index + 1} Here`}</span>
+                        <span className="text-gray-500 text-lg font-semibold italic">{placeholder}</span>
                     )}
                 </div>
             );
         };
 
         // --- Componentes de Atividade ---
-
         const PronounInputActivity = ({ addPoints, data }) => {
             const [answers, setAnswers] = React.useState(Array(data.length).fill(''));
             const [feedback, setFeedback] = React.useState(Array(data.length).fill(null)); // null, 'success', 'error'
@@ -360,7 +350,7 @@
                     const newFeedback = [...feedback];
                     newFeedback[index] = 'success';
                     setFeedback(newFeedback);
-                    addPoints(10);
+                    addPoints(10); // Adiciona pontos por acerto
                 } else {
                     const newFeedback = [...feedback];
                     newFeedback[index] = 'error';
@@ -398,55 +388,64 @@
         };
 
         const PronounApplicationActivity = ({ addPoints }) => {
-            const [answers, setAnswers] = React.useState(Array(PRONOUN_APPLICATION_DATA.length).fill(''));
-            const [feedback, setFeedback] = React.useState(Array(PRONOUN_APPLICATION_DATA.length).fill(null));
+            const [currentExerciseIndex, setCurrentExerciseIndex] = React.useState(0);
+            const [answer, setAnswer] = React.useState('');
+            const [feedback, setFeedback] = React.useState(null); // null, 'success', 'error'
 
-            const handleChange = (e, index) => {
-                const newAnswers = [...answers];
-                newAnswers[index] = e.target.value;
-                setAnswers(newAnswers);
+            const currentItem = PRONOUN_APPLICATION_DATA[currentExerciseIndex];
+
+            const checkAnswer = () => {
+                if (answer.trim().toLowerCase() === currentItem.en.toLowerCase()) {
+                    setFeedback('success');
+                    addPoints(15);
+                } else {
+                    setFeedback('error');
+                }
             };
 
-            const checkAnswer = (index) => {
-                const userAnswer = answers[index].trim().toLowerCase();
-                const correctAnswer = PRONOUN_APPLICATION_DATA[index].en.toLowerCase();
-                if (userAnswer === correctAnswer) {
-                    const newFeedback = [...feedback];
-                    newFeedback[index] = 'success';
-                    setFeedback(newFeedback);
-                    addPoints(10);
+            const handleNext = () => {
+                if (currentExerciseIndex < PRONOUN_APPLICATION_DATA.length - 1) {
+                    setCurrentExerciseIndex(prev => prev + 1);
+                    setAnswer('');
+                    setFeedback(null);
                 } else {
-                    const newFeedback = [...feedback];
-                    newFeedback[index] = 'error';
-                    setFeedback(newFeedback);
+                    setFeedback('completed');
                 }
             };
 
             return (
-                <div className="mt-6 space-y-4">
-                    <h3 className="text-xl font-semibold text-gray-200 mb-3">Exercício: Substitua por Pronomes</h3>
-                    {PRONOUN_APPLICATION_DATA.map((item, index) => (
-                        <div key={item.id} className="flex items-center space-x-3">
-                            <span className="text-gray-300 w-40">{item.pt}:</span>
-                            <input
-                                type="text"
-                                value={answers[index]}
-                                onChange={(e) => handleChange(e, index)}
-                                className={`flex-grow p-2 rounded-lg bg-gray-700 text-gray-100 border-2 ${
-                                    feedback[index] === 'success' ? 'border-lime-500' :
-                                    feedback[index] === 'error' ? 'border-red-500' : 'border-gray-600'
-                                } focus:outline-none focus:border-cyan-500`}
-                                placeholder={`Ex: ${item.en}`}
-                            />
-                            <button
-                                onClick={() => checkAnswer(index)}
-                                className="p-2 rounded-lg bg-cyan-600 hover:bg-cyan-700 text-white transition duration-150"
-                            >
-                                {feedback[index] === 'success' ? <CheckCircle className="w-5 h-5" /> :
-                                 feedback[index] === 'error' ? <XCircle className="w-5 h-5" /> : 'Verificar'}
+                <div className="mt-6 space-y-4 p-4 bg-gray-800 rounded-xl border border-gray-700">
+                    <h3 className="text-xl font-semibold text-gray-200 mb-3">Aplicação: Substitua por Pronomes</h3>
+                    <p className="text-lg text-gray-300">
+                        Substitua "<span className="font-bold text-lime-400">{currentItem.pt}</span>" por um pronome:
+                    </p>
+                    <div className="flex items-center space-x-3">
+                        <input
+                            type="text"
+                            value={answer}
+                            onChange={(e) => setAnswer(e.target.value)}
+                            className={`flex-grow p-2 rounded-lg bg-gray-700 text-gray-100 border-2 ${
+                                feedback === 'success' ? 'border-lime-500' :
+                                feedback === 'error' ? 'border-red-500' : 'border-gray-600'
+                            } focus:outline-none focus:border-cyan-500`}
+                            placeholder="Ex: They"
+                        />
+                        <button
+                            onClick={checkAnswer}
+                            className="p-2 rounded-lg bg-cyan-600 hover:bg-cyan-700 text-white transition duration-150"
+                            disabled={feedback === 'success' || feedback === 'completed'}
+                        >
+                            {feedback === 'success' ? <CheckCircle className="w-5 h-5" /> :
+                             feedback === 'error' ? <XCircle className="w-5 h-5" /> : 'Verificar'}
+                        </button>
+                        {feedback === 'success' && (
+                            <button onClick={handleNext} className="p-2 rounded-lg bg-fuchsia-600 hover:bg-fuchsia-700 text-white transition duration-150">
+                                Próximo
                             </button>
-                        </div>
-                    ))}
+                        )}
+                    </div>
+                    {feedback === 'error' && <p className="text-red-400 mt-2">Tente novamente. Qual pronome substitui "{currentItem.pt}"?</p>}
+                    {feedback === 'completed' && <p className="text-lime-400 mt-2 font-bold">Parabéns! Você completou todos os exercícios de pronomes!</p>}
                 </div>
             );
         };
@@ -525,17 +524,17 @@
 
             React.useEffect(() => {
                 shuffle();
-            }, [shuffle, currentExerciseIndex]); // Reset on exercise change
+            }, [shuffle, currentExerciseIndex]);
 
             const checkCompletion = React.useCallback((newOrder) => {
                 const isComplete = newOrder.every(block => block !== null);
                 if (isComplete) {
                     const isCorrect = newOrder.every((block, index) => block.content === currentTarget[index].content);
                     if (isCorrect) {
-                        setFeedback({ message: "Sensacional! A estrutura SVO está perfeita.", type: 'success' });
+                        setFeedback({ message: "Excelente! A frase está perfeitamente estruturada.", type: 'success' });
                         addPoints(20);
                     } else {
-                        setFeedback({ message: "Quase lá! A estrutura SVO está incorreta. Revise a ordem dos blocos.", type: 'error' });
+                        setFeedback({ message: "Ops! A ordem está incorreta. Lembre-se: Sujeito + Verbo + Objeto.", type: 'error' });
                     }
                 }
             }, [currentTarget, addPoints]);
@@ -567,14 +566,14 @@
                 if (currentExerciseIndex < data.length - 1) {
                     setCurrentExerciseIndex(prev => prev + 1);
                 } else {
-                    setFeedback({ message: "Parabéns! Você completou todos os exercícios SVO!", type: 'success' });
+                    setFeedback({ message: "Parabéns! Você completou todos os exercícios de SVO!", type: 'success' });
                 }
             };
 
             return (
-                <div className="p-6 bg-gray-900 rounded-2xl shadow-2xl shadow-black border border-cyan-700">
+                <div className="p-6 bg-gray-900 rounded-2xl shadow-2xl shadow-black border border-cyan-700 mt-6">
                     <h3 className="text-xl font-semibold text-gray-300 mb-4 flex items-center justify-between">
-                        Monte a Frase (SVO) - Exercício {currentExerciseIndex + 1} de {data.length}
+                        Monte a Frase SVO - Exercício {currentExerciseIndex + 1} de {data.length}
                         <button onClick={shuffle} className="flex items-center text-sm text-cyan-400 hover:text-cyan-200 transition duration-150 p-2 rounded-lg bg-gray-800 hover:bg-gray-700 border border-cyan-500/50">
                             <RefreshCw className="w-4 h-4 mr-1" /> Resetar
                         </button>
@@ -606,7 +605,7 @@
                     </div>
                     {feedback.type === 'success' && currentExerciseIndex < data.length - 1 && (
                         <button onClick={handleNextExercise} className="w-full p-3 rounded-lg bg-fuchsia-600 hover:bg-fuchsia-700 text-white font-bold text-lg transition duration-150 mt-4">
-                            Próximo Exercício <span className="ml-2">→</span>
+                            Próxima Frase <span className="ml-2">→</span>
                         </button>
                     )}
                 </div>
@@ -630,7 +629,7 @@
                     const newFeedback = [...feedback];
                     newFeedback[index] = 'success';
                     setFeedback(newFeedback);
-                    addPoints(15);
+                    addPoints(10);
                 } else {
                     const newFeedback = [...feedback];
                     newFeedback[index] = 'error';
@@ -648,7 +647,6 @@
                                 type="text"
                                 value={answers[index]}
                                 onChange={(e) => handleChange(e, index)}
-                                maxLength={item.answer.length}
                                 className={`flex-grow p-2 rounded-lg bg-gray-700 text-gray-100 border-2 ${
                                     feedback[index] === 'success' ? 'border-lime-500' :
                                     feedback[index] === 'error' ? 'border-red-500' : 'border-gray-600'
